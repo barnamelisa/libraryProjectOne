@@ -5,8 +5,10 @@ import model.builder.BookBuilder;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -57,14 +59,15 @@ public class BookRepositoryMySQL implements BookRepository{
 
     @Override
     public boolean save(Book book) {
-
         // avem apostrof(') pt fiecare elem ca sa se poata realiza cu succes scrierea in baza de date
-        String newSql = "INSERT INTO book VALUES(null, \'" + book.getAuthor() +"\', \'" + book.getTitle()+"\', \'" + book.getPublishedDate() + "\' );";
+        // String newSql = "INSERT INTO book VALUES(null, \'" + book.getAuthor() +"\', \'" + book.getTitle()+"\', \'" + book.getPublishedDate() + "\' );";
+        String newSql = "INSERT INTO book (author, title, publishedDate) VALUES (?, ?, ?)";
 
-        try{
-            Statement statement=connection.createStatement();
-            statement.executeUpdate(newSql);
-
+        try (PreparedStatement preparedStatement = connection.prepareStatement(newSql)){
+            preparedStatement.setString(1, book.getAuthor()); // 1 se refera la primul ? ; getAuthor() returneaza autorul; intreaga secventa inlocuieste de fapt primul ? cu autorul(ex:Ion Luca Caragiale)
+            preparedStatement.setString(2, book.getTitle()); // 2 se refera la primul ? ; getTitle() returneaza titlul; intreaga secventa inlocuieste de fapt al doilea ? cu titlul(ex:O scrisoare pierduta)
+            preparedStatement.setDate(3,Date.valueOf(book.getPublishedDate()));
+            preparedStatement.executeUpdate();
         } catch (SQLException e){
             e.printStackTrace();
             return false;
@@ -74,12 +77,15 @@ public class BookRepositoryMySQL implements BookRepository{
 
     @Override
     public boolean delete(Book book) {
-        String newSql = "DELETE FROM book WHERE author=\'" + book.getAuthor() +"\' AND title=\'" + book.getTitle()+"\';";
+        // String newSql = "DELETE FROM book WHERE author=\'" + book.getAuthor() +"\' AND title=\'" + book.getTitle()+"\';"; -- VULNERABIL
+        // Folosim PreparedStatement in loc de Statement si ? ca sa evitam SQL Injection (adaugam protectie si nu mai avem concatenare de string-uri)
+        String newSql = "DELETE FROM book WHERE author = ? AND title = ?";
 
-        try{
-            Statement statement = connection.createStatement();
-            statement.executeUpdate(newSql);
-
+        try (PreparedStatement preparedStatement = connection.prepareStatement(newSql)){
+            preparedStatement.setString(1, book.getAuthor()); // 1 se refera la primul ? ; getAuthor() returneaza autorul; intreaga secventa inlocuieste de fapt primul ? cu autorul(ex:Ion Luca Caragiale)
+            preparedStatement.setString(2, book.getTitle()); // 2 se refera la primul ? ; getTitle() returneaza titlul; intreaga secventa inlocuieste de fapt al doilea ? cu titlul(ex:O scrisoare pierduta)
+            preparedStatement.executeUpdate();
+        //iar interogarea sql va deveni: DELETE FROM book WHERE author = 'Ion Luca Caragiale' AND title = 'O scrisoare pierduta';
         } catch (SQLException e){
             e.printStackTrace();
             return false;
