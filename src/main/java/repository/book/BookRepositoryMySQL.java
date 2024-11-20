@@ -1,4 +1,4 @@
-package repository;
+package repository.book;
 
 import model.Book;
 import model.builder.BookBuilder;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class BookRepositoryMySQL implements BookRepository{
+public class BookRepositoryMySQL implements BookRepository {
 
     private final Connection connection;
     public BookRepositoryMySQL(Connection connection){
