@@ -12,7 +12,6 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.event.EventHandler;
 import javafx.event.ActionEvent;
-import model.Book;
 import view.model.BookDTO;
 
 import java.util.List;
@@ -44,14 +43,6 @@ public class BookView {
 
         primaryStage.show();
     }
-
-    private void initializeGridPage(GridPane gridPane){
-        gridPane.setAlignment(Pos.CENTER);
-        gridPane.setHgap(10);
-        gridPane.setVgap(10);
-        gridPane.setPadding(new Insets(25, 25, 25, 25));
-    }
-
     private void initTableView(GridPane gridPane){
         bookTableView = new TableView<BookDTO>();
 
@@ -87,6 +78,13 @@ public class BookView {
 
         deleteButton =  new Button("Delete");
         gridPane.add(deleteButton,6,1); // coloana 6, randu 1
+    }
+
+    private void initializeGridPage(GridPane gridPane){
+        gridPane.setAlignment(Pos.CENTER);
+        gridPane.setHgap(10);
+        gridPane.setVgap(10);
+        gridPane.setPadding(new Insets(25, 25, 25, 25));
     }
 
     public void addSaveButtonListener(EventHandler<ActionEvent> saveButtonListener){
