@@ -1,13 +1,14 @@
 package repository.user;
 
 import model.User;
+import model.validation.Notification;
 
 import java.util.*;
 
 // la aceasta interfata vom avea acces din service
 public interface UserRepository {
     List<User> findAll(); // va returna o lista de useri
-    User findByUsernameAndPassword(String username, String password);
+    Notification<User> findByUsernameAndPassword(String username, String password);
     boolean save(User user);
     void removeAll();
 
