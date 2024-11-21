@@ -21,16 +21,17 @@ public class LoginComponentFactory {
     private final UserRepository userRepository;
     private final RightsRolesRepository rightsRolesRepository;
     private final BookRepositoryMySQL bookRepository;
-    private static LoginComponentFactory instance;
+    private static volatile LoginComponentFactory instance;
     private static Boolean componentsForTests;
     private static Stage stage;
-    private static volatile LoginComponentFactory loginComponentFactory;
 
     public static LoginComponentFactory getInstance(Boolean aComponentsForTests, Stage aStage) {
         if (instance == null) {
             synchronized (LoginComponentFactory.class){
                 if (instance == null){
-                    instance=new LoginComponentFactory(aComponentsForTests,aStage);
+                    componentsForTests = aComponentsForTests;
+                    stage = aStage;
+                    instance=new LoginComponentFactory(componentsForTests,stage);
                 }
             }
         }
