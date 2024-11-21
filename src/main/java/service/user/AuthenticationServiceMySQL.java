@@ -3,6 +3,8 @@ import model.Role;
 import model.User;
 import model.builder.UserBuilder;
 
+import model.validation.Notification;
+import model.validation.UserValidator;
 import repository.security.RightsRolesRepository;
 import repository.user.UserRepository;
 
@@ -26,25 +28,40 @@ public class AuthenticationServiceMySQL implements AuthenticationService {
     }
 
     @Override
-    public boolean register(String username, String password) {
-        String encodePassword = hashPassword(password);
+    public Notification<Boolean> register(String username, String password) {
 
-        // Criptare: mesaj -> bviodifibifdupb -> mesaj
-        // parolasinmpla123! -> hbgcidsvodsbvl8734ohwdo (se transforma intr-un hash)
-        // de la un hash nu ma pot intoarce inapoi la textul initial
         Role customerRole = rightsRolesRepository.findRoleByTitle(CUSTOMER);
 
         User user = new UserBuilder()
                 .setUsername(username)
-                .setPassword(encodePassword)
+                .setPassword(password)
                 .setRoles(Collections.singletonList(customerRole))
                 .build();
 
-        return userRepository.save(user);
+
+        UserValidator userValidator = new UserValidator(user);
+
+        boolean userValid = userValidator.validate();
+        Notification<Boolean> userRegisterNotification = new Notification<>();
+
+        if (!userValid){
+            userValidator.getErrors().forEach(userRegisterNotification::addError); // pt fiecare eroare va apela add method cu acea eroare in notification
+            userRegisterNotification.setResult(Boolean.FALSE);
+        } else {
+            user.setPassword(hashPassword(password));
+            userRegisterNotification.setResult(userRepository.save(user));
+        }
+
+        // Criptare: mesaj -> bviodifibifdupb -> mesaj
+        // parolasinmpla123! -> hbgcidsvodsbvl8734ohwdo (se transforma intr-un hash)
+        // de la un hash nu ma pot intoarce inapoi la textul initial
+        // String encodePassword = hashPassword(password);
+
+        return userRegisterNotification;
     }
 
     @Override
-    public User login(String username, String password) {
+    public Notification<User> login(String username, String password) {
         return userRepository.findByUsernameAndPassword(username, hashPassword(password));
     }
 
