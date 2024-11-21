@@ -25,8 +25,7 @@ javafx {
     modules = ['javafx.controls', 'javafx.fxml']
 }
 
-//mainClassName='launcher.Main'
-mainClassName='Main'
+mainClassName='launcher.Main'
 
 jar {
     manifest {
