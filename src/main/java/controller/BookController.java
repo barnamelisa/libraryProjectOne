@@ -76,7 +76,6 @@ public class BookController {
         }
     }
 
-    // de explicat + inteles
     private class SaleBookButtonListener implements EventHandler<ActionEvent> {
         @Override
         public void handle(ActionEvent event) {
@@ -91,10 +90,9 @@ public class BookController {
             boolean saleSuccessful = bookService.saleBook(selectedBook);
 
             // aici trebuie sa folosesc metoda save din clasa OrderServiceImpl
-            boolean orderSuccessful = orderService.save(selectedBook, 1L);
+           // boolean orderSuccessful = orderService.save(selectedBook, 1L);
 
             if (saleSuccessful) {
-                // Reflectăm modificările în lista observabilă
                 bookView.saleBookFromObservableList(selectedBookDTO);
             } else {
                 bookView.addDisplayAlertMessage("Vânzare", "Eroare", "Cartea \"" + selectedBookDTO.getTitle() + "\" nu mai este în stoc.");
