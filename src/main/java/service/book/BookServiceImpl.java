@@ -23,7 +23,6 @@ public class BookServiceImpl implements BookService {
         return bookRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Book with id: %d was not found.".formatted(id)));
     }
-
     @Override
     public boolean save(Book book) {
         return bookRepository.save(book);
@@ -41,4 +40,16 @@ public class BookServiceImpl implements BookService {
 
         return (int) ChronoUnit.YEARS.between(book.getPublishedDate(), now);
     }
+
+    // de explicat + inteles
+    @Override
+    public boolean saleBook(Book book) {
+        // apelam metoda "saleBook" din BookRepository
+        if (book.getStock() > 0) {
+            bookRepository.saleBook(book);
+            return true;
+        }
+        return false;
+    }
+
 }

@@ -31,7 +31,7 @@ public class LoginController {
     private class LoginButtonListener implements EventHandler<ActionEvent> {
 
         @Override
-        public void handle(javafx.event.ActionEvent event) {
+        public void handle(ActionEvent event) {
             String username = loginView.getUsername();
             String password = loginView.getPassword();
 

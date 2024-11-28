@@ -3,20 +3,32 @@ package controller;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import mapper.BookMapper;
+import model.Book;
+import model.Order;
+import model.User;
+import model.validation.Notification;
+import repository.user.UserRepositoryMySQL;
 import service.book.BookService;
+import service.order.OrderService;
 import view.BookView;
 import view.model.BookDTO;
 import view.model.builder.BookDTOBuilder;
 
+import java.util.function.LongFunction;
+
 public class BookController {
     private final BookView bookView;
     private final BookService bookService;
-    public BookController(BookView bookView, BookService bookService){
+    private final OrderService orderService;
+
+    public BookController(BookView bookView, BookService bookService, OrderService orderService){
         this.bookView = bookView;
         this.bookService = bookService;
+        this.orderService = orderService;
 
         this.bookView.addSaveButtonListener(new SaveButtonListener());
         this.bookView.addDeleteButtonListener(new DeleteButtonListener());
+        this.bookView.addSaleBookButtonListener(new SaleBookButtonListener());
     }
 
     private class SaveButtonListener implements EventHandler<ActionEvent>{
@@ -25,11 +37,13 @@ public class BookController {
         public void handle(ActionEvent event) {
             String title = bookView.getTitle();
             String author = bookView.getAuthor();
+            Integer price = bookView.getPrice();
+            Integer stock = bookView.getStock();
 
-            if (title.isEmpty() || author.isEmpty()){
+            if (title.isEmpty() || author.isEmpty() || price==null || stock==null){
                 bookView.addDisplayAlertMessage("Save Error","Problem at Author or Title fields","Can not have an empty Title or Author field.");
             } else {
-                BookDTO bookDTO = new BookDTOBuilder().setTitle(title).setAuthor(author).build();
+                BookDTO bookDTO = new BookDTOBuilder().setTitle(title).setAuthor(author).setPrice(price).setStock(stock).build();
                 boolean savedBook = bookService.save(BookMapper.convertBookDTOToBook(bookDTO));
 
                 if (savedBook){
@@ -61,4 +75,30 @@ public class BookController {
             }
         }
     }
+
+    private class SaleBookButtonListener implements EventHandler<ActionEvent> {
+        @Override
+        public void handle(ActionEvent event) {
+            BookDTO selectedBookDTO = (BookDTO) bookView.getBookTableView().getSelectionModel().getSelectedItem();
+
+            if (selectedBookDTO == null) {
+                bookView.addDisplayAlertMessage("Vanzare", "Eroare", "Selectați o carte pentru a efectua vânzarea.");
+                return;
+            }
+
+            Book selectedBook = BookMapper.convertBookDTOToBook(selectedBookDTO);
+            boolean saleSuccessful = bookService.saleBook(selectedBook);
+
+            // aici trebuie sa folosesc metoda save din clasa OrderServiceImpl
+           // boolean orderSuccessful = orderService.save(selectedBook, 1L);
+
+            if (saleSuccessful) {
+                bookView.saleBookFromObservableList(selectedBookDTO);
+            } else {
+                bookView.addDisplayAlertMessage("Vânzare", "Eroare", "Cartea \"" + selectedBookDTO.getTitle() + "\" nu mai este în stoc.");
+            }
+        }
+    }
+
+
 }
