@@ -18,7 +18,7 @@ public class JDBConnectionWrapper {
         try {
             Class.forName(JDBC_DRIVER);
             connection= DriverManager.getConnection(DB_URL + schema, USER, PASSWORD);
-            createTables();
+           // createTables();
         } catch (ClassNotFoundException e){
             e.printStackTrace();
         } catch (SQLException e){
@@ -26,19 +26,35 @@ public class JDBConnectionWrapper {
         }
     }
 
-    private void createTables() throws SQLException {
-        Statement statement = connection.createStatement();
-
-        String sql = "CREATE TABLE IF NOT EXISTS book(" +
-                " id bigint NOT NULL AUTO_INCREMENT," +
-                " author VARCHAR(500) NOT NULL," +
-                " title VARCHAR(500) NOT NULL," +
-                " publishedDate datetime DEFAULT NULL," +
-                " PRIMARY KEY(id)," +
-                " UNIQUE KEY id_UNIQUE(id)" +
-                ") ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;";
-        statement.execute(sql);
-    }
+//    private void createTables() throws SQLException {
+//        Statement statement = connection.createStatement();
+//
+//        String sql = "CREATE TABLE IF NOT EXISTS book(" +
+//                " id bigint NOT NULL AUTO_INCREMENT," +
+//                " author VARCHAR(500) NOT NULL," +
+//                " title VARCHAR(500) NOT NULL," +
+//                " publishedDate datetime DEFAULT NULL," +
+//                " price int(11) NOT NULL," +
+//                " stock int(11) NOT NULL," +
+//                " PRIMARY KEY(id)," +
+//                " UNIQUE KEY id_UNIQUE(id)" +
+//                ") ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;";
+//        statement.execute(sql);
+//
+//        String sql1 = "CREATE TABLE IF NOT EXISTS orders(" +
+//                " id bigint NOT NULL AUTO_INCREMENT," +
+//                " orderDate datetime DEFAULT NULL," +
+//                " bookAuthor VARCHAR(500) NOT NULL," +
+//                " bookTitle VARCHAR(500) NOT NULL," +
+//                " bookPrice int(11) NOT NULL," +
+//                " bookStock int(11) NOT NULL," +
+//                " userId int(11) NOT NULL," +
+//                " PRIMARY KEY(id)," +
+//                " UNIQUE KEY id_UNIQUE(id)" +
+//                ") ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;";
+//        statement.execute(sql1);
+//
+//    }
 
     public boolean testConnection() throws SQLException{
         return connection.isValid(TIMEOUT);
@@ -47,6 +63,5 @@ public class JDBConnectionWrapper {
     public Connection getConnection(){
         return connection;
     }
-
 
 }

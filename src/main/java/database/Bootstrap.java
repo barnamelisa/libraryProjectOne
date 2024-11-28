@@ -17,7 +17,6 @@ import static database.Constants.getRolesRights;
 // Script - code care automatizeaza practic mai multi pasi
 // creaza tabelele de care avem nevoie cand rulam prima data aplicatia
 public class Bootstrap {
-
     private static RightsRolesRepository rightsRolesRepository;
 
     public static void main(String[] args) throws SQLException {
@@ -43,7 +42,7 @@ public class Bootstrap {
                     "TRUNCATE `user_role`;",
                     "DROP TABLE `user_role`;",
                     "TRUNCATE `role`;",
-                    "DROP TABLE  `book`, `role`, `user`;"
+                    "DROP TABLE  `book`, `role`, `user`, `orders`;"
             };
 
             Arrays.stream(dropStatements).forEach(dropStatement -> {

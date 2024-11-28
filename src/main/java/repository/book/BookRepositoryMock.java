@@ -1,6 +1,7 @@
 package repository.book;
 
 import model.Book;
+import model.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,4 +39,10 @@ public class BookRepositoryMock implements BookRepository {
     public void removeAll() {
         books.clear();
     }
+
+    @Override
+    public void saleBook(Book book) {
+
+    }
+
 }
