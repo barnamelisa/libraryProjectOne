@@ -73,7 +73,7 @@ public class SQLTableCreationFactory {
                     "    ON UPDATE CASCADE);";
             case ORDERS -> "CREATE TABLE IF NOT EXISTS orders (" +
                     "  id int(11) NOT NULL AUTO_INCREMENT," +
-                    "  orderDate datetime DEFAULT NULL," +
+                    "  orderDate timestamp DEFAULT NULL," +
                     "  author varchar(500) NOT NULL," +
                     "  title varchar(500) NOT NULL," +
                     "  price int(11) NOT NULL," +

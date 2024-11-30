@@ -20,11 +20,13 @@ public class BookController {
     private final BookView bookView;
     private final BookService bookService;
     private final OrderService orderService;
+    private final Long userId;
 
-    public BookController(BookView bookView, BookService bookService, OrderService orderService){
+    public BookController(BookView bookView, BookService bookService, OrderService orderService, Long userId){
         this.bookView = bookView;
         this.bookService = bookService;
         this.orderService = orderService;
+        this.userId = userId;
 
         this.bookView.addSaveButtonListener(new SaveButtonListener());
         this.bookView.addDeleteButtonListener(new DeleteButtonListener());
@@ -82,20 +84,26 @@ public class BookController {
             BookDTO selectedBookDTO = (BookDTO) bookView.getBookTableView().getSelectionModel().getSelectedItem();
 
             if (selectedBookDTO == null) {
-                bookView.addDisplayAlertMessage("Vanzare", "Eroare", "Selectați o carte pentru a efectua vânzarea.");
+                bookView.addDisplayAlertMessage("Vanzare", "Eroare", "Selectați o carte pentru a efectua vanzarea.");
                 return;
             }
 
             Book selectedBook = BookMapper.convertBookDTOToBook(selectedBookDTO);
             boolean saleSuccessful = bookService.saleBook(selectedBook);
 
-            // aici trebuie sa folosesc metoda save din clasa OrderServiceImpl
-           // boolean orderSuccessful = orderService.save(selectedBook, 1L);
-
             if (saleSuccessful) {
-                bookView.saleBookFromObservableList(selectedBookDTO);
+
+                // salvez comanda folosind userId si detaliile cartii
+                boolean orderSaved = orderService.save(selectedBook, userId);
+
+                if (orderSaved){
+                    bookView.saleBookFromObservableList(selectedBookDTO);
+                    bookView.addDisplayAlertMessage("Vanzare", "Succes", "Cartea \"" + selectedBookDTO.getTitle() + "\" a fost vândută cu succes.");
+                } else {
+                    bookView.addDisplayAlertMessage("Vanzare", "Eroare", "A fost o problema la salvarea comenzii. Va rugam sa incercayi din nou.");
+                }
             } else {
-                bookView.addDisplayAlertMessage("Vânzare", "Eroare", "Cartea \"" + selectedBookDTO.getTitle() + "\" nu mai este în stoc.");
+                bookView.addDisplayAlertMessage("Vanzare", "Eroare", "Cartea \"" + selectedBookDTO.getTitle() + "\" nu mai este in stoc.");
             }
         }
     }

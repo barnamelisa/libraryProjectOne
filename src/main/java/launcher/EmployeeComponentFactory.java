@@ -30,18 +30,17 @@ public class EmployeeComponentFactory {
     private final BookService bookService;
     private final OrderService orderService;
     private final OrderRepository orderRepository;
-   // private final User user;
 
     private static volatile EmployeeComponentFactory instance; // instanta a clasei pt ca este Singleton
 
     /** clasa va fi locul unde vom consytrui arborele de dependency injection si practic vom controla app folosindu-ne de dependinte
         TO DO: adaugat tot ce e nevoie in aceasta clasa ca sa fie thread-safe si sa fie Singleton cu adevarat(lazi load in cazul nostru)
      */
-    public static EmployeeComponentFactory getInstance(Boolean componentsForTest, Stage primaryStage){
+    public static EmployeeComponentFactory getInstance(Boolean componentsForTest, Stage primaryStage, Long userId){
         if (instance == null) {
             synchronized (EmployeeComponentFactory.class){
                 if (instance == null){
-                    instance=new EmployeeComponentFactory(componentsForTest,primaryStage);
+                    instance=new EmployeeComponentFactory(componentsForTest, primaryStage, userId);
                 }
             }
         }
@@ -49,7 +48,7 @@ public class EmployeeComponentFactory {
     }
 
     // ca sa avem clasa Singleton avem nevoie de constructor privat
-    private EmployeeComponentFactory(Boolean componentsForTest, Stage stage){
+    private EmployeeComponentFactory(Boolean componentsForTest, Stage stage, Long userId){
         Connection connection = DatabaseConnectionFactory.getConnectionWrapper(componentsForTest).getConnection();
         this.bookRepository = new BookRepositoryCacheDecorator(new BookRepositoryMySQL(connection), new Cache<>());
         this.bookService = new BookServiceImpl(bookRepository);
@@ -60,7 +59,7 @@ public class EmployeeComponentFactory {
         this.orderService = new OrderServiceImpl(orderRepository);
 
         this.bookView = new BookView(stage, bookDTOs);
-        this.bookController = new BookController(bookView, bookService, orderService);
+        this.bookController = new BookController(bookView, bookService, orderService, userId); // aici tr user id
     }
 
     public BookView getBookView() {

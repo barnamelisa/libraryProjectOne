@@ -1,10 +1,12 @@
 package model;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Order {
     private Long id; // id-ul comenzii
-    private LocalDate orderDate;
+    private Timestamp orderDate;
     private String bookAuthor; // aici putem inlocui cu id_book
     private String bookTitle;
     private Integer bookPrice;
@@ -15,7 +17,7 @@ public class Order {
         return id;
     }
 
-    public LocalDate getOrderDate() {
+    public Timestamp getOrderDate() {
         return orderDate;
     }
 
@@ -43,7 +45,7 @@ public class Order {
         this.id = id;
     }
 
-    public void setOrderDate(LocalDate orderDate) {
+    public void setOrderDate(Timestamp orderDate) {
         this.orderDate = orderDate;
     }
 
