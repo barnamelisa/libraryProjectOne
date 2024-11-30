@@ -168,12 +168,12 @@ public class BookView {
                         bookTableView.refresh(); // actualizam tabela din interfata
 
                         if (it.getStock() == 0) {
-                            addDisplayAlertMessage("Vânzare", "Stoc Epuizat", "Cartea \"" + it.getTitle() + "\" nu mai este în stoc.");
+                            addDisplayAlertMessage("Vanzare", "Stoc Epuizat", "Cartea \"" + it.getTitle() + "\" nu mai este in stoc.");
                         } else {
-                            addDisplayAlertMessage("Vânzare", "Carte Vândută", "Cartea \"" + it.getTitle() + "\" a fost vândută. Stoc rămas: " + it.getStock());
+                            addDisplayAlertMessage("Vanzare", "Carte Vanduta", "Cartea \"" + it.getTitle() + "\" a fost vanduta. Stoc ramas: " + it.getStock());
                         }
                     } else {
-                        addDisplayAlertMessage("Vânzare", "Stoc Insuficient", "Cartea \"" + it.getTitle() + "\" nu mai este în stoc.");
+                        addDisplayAlertMessage("Vanzare", "Stoc Insuficient", "Cartea \"" + it.getTitle() + "\" nu mai este în stoc.");
                     }
                 });
     }

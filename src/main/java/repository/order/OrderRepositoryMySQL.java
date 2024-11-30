@@ -18,7 +18,7 @@ public class OrderRepositoryMySQL implements OrderRepository{
         String newSql = "INSERT INTO orders (orderDate, author, title, price, stock, userId) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(newSql)){
-            preparedStatement.setDate(1, Date.valueOf(book.getPublishedDate()));
+            preparedStatement.setTimestamp(1,  Timestamp.valueOf(java.time.LocalDateTime.now()));
             preparedStatement.setString(2, book.getAuthor());
             preparedStatement.setString(3, book.getTitle());
             preparedStatement.setInt(4, book.getPrice());

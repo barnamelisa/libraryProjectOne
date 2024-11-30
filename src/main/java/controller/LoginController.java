@@ -40,8 +40,15 @@ public class LoginController {
             if (loginNotification.hasErrors()){
                 loginView.setActionTargetText(loginNotification.getFormattedErrors());
             } else{
-                loginView.setActionTargetText("LogIn Successfull!");
-                EmployeeComponentFactory.getInstance(LoginComponentFactory.getComponentsForTests(), LoginComponentFactory.getStage());
+                User loggedInUser = loginNotification.getResult();
+                if (loggedInUser != null){
+                    Long userId = loggedInUser.getId();
+                    loginView.setActionTargetText("LogIn Successfull!");
+
+                    EmployeeComponentFactory.getInstance(LoginComponentFactory.getComponentsForTests(), LoginComponentFactory.getStage(), userId);
+                } else {
+                    loginView.setActionTargetText("Error: Logged in user details not found.");
+                }
             }
         }
     }
