@@ -20,7 +20,7 @@ import java.util.List;
 
 public class BookView {
     private TableView bookTableView; // in acest tabel vom adauga toate cartile
-    private final ObservableList<BookDTO> booksObservableList; // ObservableList-va contine carti car nu orice fel de carti, ci niste carti modificate(BookDTO)
+    private final ObservableList<BookDTO> booksObservableList; // ObservableList-va contine carti dar nu orice fel de carti, ci niste carti modificate(BookDTO)
     private TextField authorTextField;
     private TextField titleTextField;
     private TextField priceTextField;

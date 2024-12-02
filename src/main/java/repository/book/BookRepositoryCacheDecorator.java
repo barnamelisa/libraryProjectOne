@@ -11,7 +11,7 @@ public class BookRepositoryCacheDecorator extends BookRepositoryDecorator {
 
     public BookRepositoryCacheDecorator(BookRepository bookRepository, Cache<Book> cache){
         super(bookRepository);
-        this.cache=cache;
+        this.cache = cache;
     }
     @Override
     public List<Book> findAll() {

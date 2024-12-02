@@ -41,4 +41,12 @@ public class User {
     public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
+    public boolean hasRole(String roleName) {
+        for (Role role : roles) {
+            if (role.getRole().equalsIgnoreCase(roleName)) {
+                return true;  // role found
+            }
+        }
+        return false;  // role not found
+    }
 }

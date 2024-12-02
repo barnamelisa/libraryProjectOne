@@ -3,6 +3,7 @@ package controller;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
+import launcher.AdminComponentFactory;
 import launcher.EmployeeComponentFactory;
 import launcher.LoginComponentFactory;
 import model.User;
@@ -45,7 +46,13 @@ public class LoginController {
                     Long userId = loggedInUser.getId();
                     loginView.setActionTargetText("LogIn Successfull!");
 
-                    EmployeeComponentFactory.getInstance(LoginComponentFactory.getComponentsForTests(), LoginComponentFactory.getStage(), userId);
+                    if (loggedInUser.hasRole("customer")){
+                        // aceasta linie de cod deschide un alt stage care este Library
+                        EmployeeComponentFactory.getInstance(LoginComponentFactory.getComponentsForTests(), LoginComponentFactory.getStage(), userId);
+                    } else if (loggedInUser.hasRole("administrator")){
+                        // daca persoana care face log in este Admin atunci se va deschide o interfata noua care va permite utilizatorului sa adauge noi users
+                        AdminComponentFactory.getInstance(LoginComponentFactory.getComponentsForTests(), LoginComponentFactory.getStage());
+                    }
                 } else {
                     loginView.setActionTargetText("Error: Logged in user details not found.");
                 }
