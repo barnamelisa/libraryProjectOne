@@ -30,7 +30,7 @@ public class AuthenticationServiceMySQL implements AuthenticationService {
     @Override
     public Notification<Boolean> register(String username, String password) {
 
-        Role customerRole = rightsRolesRepository.findRoleByTitle(CUSTOMER);
+        Role customerRole = rightsRolesRepository.findRoleByTitle(CUSTOMER); // asignam rolul de customer oricarui nou user care se inregistreaza
 
         User user = new UserBuilder()
                 .setUsername(username)
@@ -70,7 +70,10 @@ public class AuthenticationServiceMySQL implements AuthenticationService {
         return false;
     }
 
-    private String hashPassword(String password) {
+
+   // ca sa nu incalc niciun principiu SOLID, am facut metoda sa fie public static, ca sa poata fi accesata global, fara
+   // a adauga dependinte suplimentare sau de a incalca SingleResp si DependencyInversion
+    public static String hashPassword(String password) {
         try {
             // Sercured Hash Algorithm - 256 (se refera la nr biti)
             // 1 byte = 8 biți
