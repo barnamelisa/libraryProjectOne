@@ -3,7 +3,7 @@ package model;
 import java.time.LocalDate;
 
 public class Book {
-    private Long id; // folosim Long ca sa rpimeasca val default NULL, daca foloseam long era 0
+    private Long id; // folosim Long ca sa primeasca val default NULL, daca foloseam long era 0
     private String title;
     private String author;
     private LocalDate publishedDate;

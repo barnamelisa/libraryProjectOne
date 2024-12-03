@@ -17,6 +17,7 @@ public class AdminController {
         this.adminService = adminService;
 
         this.adminView.addUserButtonListener(new AddUserButtonListener());
+        this.adminView.generateRaportButtonListener(new GenerateRaportButtonListener());
     }
 
     private class AddUserButtonListener implements EventHandler<ActionEvent>{
@@ -39,6 +40,21 @@ public class AdminController {
                     adminView.addDisplayAlertMessage("Save Error","Problem at adding User","There was a problem at adding the user to the database. Please try again.");
                 }
             }
+
+        }
+    }
+
+    private class GenerateRaportButtonListener implements EventHandler<ActionEvent>{
+        @Override
+        public void handle(ActionEvent event) {
+            boolean reportGenerated = adminService.generateReport();
+
+            if (reportGenerated) {
+                adminView.addDisplayAlertMessage("Raport Generat", "Raportul a fost generat cu succes!", "Raportul PDF a fost creat.");
+            } else {
+                adminView.addDisplayAlertMessage("Eroare Generare Raport", "A apărut o problemă la generarea raportului", "Nu s-a putut crea raportul PDF. Încearcă din nou.");
+            }
+
 
         }
     }

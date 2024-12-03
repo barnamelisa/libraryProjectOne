@@ -1,4 +1,5 @@
 package repository.user;
+import model.Book;
 import model.User;
 import model.builder.UserBuilder;
 import model.validation.Notification;
@@ -9,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import static database.Constants.Tables.USER;
@@ -31,11 +33,6 @@ public class UserRepositoryMySQL implements UserRepository {
         return null;
     }
 
-    // SQL Injection Attacks should not work after fixing functions
-    // Be careful that the last character in sql injection payload is an empty space
-    // alexandru.ghiurutan95@gmail.com' and 1=1; --
-    // ' or username LIKE '%admin%'; --
-
     @Override
     public Notification<User> findByUsernameAndPassword(String username, String password) {
 
@@ -50,6 +47,7 @@ public class UserRepositoryMySQL implements UserRepository {
             if (userResultSet.next())
             {
                 User user = new UserBuilder()
+                        .setId(userResultSet.getLong("id"))
                         .setUsername(userResultSet.getString("username"))
                         .setPassword(userResultSet.getString("password"))
                         .setRoles(rightsRolesRepository.findRolesForUser(userResultSet.getLong("id")))
@@ -118,6 +116,27 @@ public class UserRepositoryMySQL implements UserRepository {
             e.printStackTrace();
             return false;
         }
+    }
+
+    @Override
+    public User findUserById(Long userId) {
+        String query = "SELECT * FROM user WHERE id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setLong(1, userId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                return new UserBuilder()
+                        .setId(resultSet.getLong("id"))
+                        .setUsername(resultSet.getString("username"))
+                        .setPassword(resultSet.getString("password"))
+                        .setRoles(rightsRolesRepository.findRolesForUser(resultSet.getLong("id")))
+                        .build();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }

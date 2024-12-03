@@ -46,7 +46,8 @@ public class LoginController {
                     Long userId = loggedInUser.getId();
                     loginView.setActionTargetText("LogIn Successfull!");
 
-                    if (loggedInUser.hasRole("customer")){
+                    if (loggedInUser.hasRole("employee")){
+
                         // aceasta linie de cod deschide un alt stage care este Library
                         EmployeeComponentFactory.getInstance(LoginComponentFactory.getComponentsForTests(), LoginComponentFactory.getStage(), userId);
                     } else if (loggedInUser.hasRole("administrator")){

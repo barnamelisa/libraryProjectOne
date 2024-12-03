@@ -1,4 +1,5 @@
 package service.user;
+import model.Book;
 import model.Role;
 import model.User;
 import model.builder.UserBuilder;
@@ -10,18 +11,24 @@ import repository.user.UserRepository;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import static database.Constants.Roles.CUSTOMER;
+import static database.Constants.Roles.EMPLOYEE;
 
 // TEMA- redenumire AuthenticationServiceMySQL cu AuthenticationServiceImpl
-public class AuthenticationServiceMySQL implements AuthenticationService {
+public class AuthenticationServiceImpl implements AuthenticationService {
 
     // putem avea mai multe repository-uri diferite care sa le folosim intr-un service
     private final UserRepository userRepository;
     private final RightsRolesRepository rightsRolesRepository;
 
-    public AuthenticationServiceMySQL(UserRepository userRepository, RightsRolesRepository rightsRolesRepository) {
+    public AuthenticationServiceImpl(UserRepository userRepository, RightsRolesRepository rightsRolesRepository) {
         // injectam cele 2 dependinte
         this.userRepository = userRepository;
         this.rightsRolesRepository = rightsRolesRepository;
@@ -30,7 +37,8 @@ public class AuthenticationServiceMySQL implements AuthenticationService {
     @Override
     public Notification<Boolean> register(String username, String password) {
 
-        Role customerRole = rightsRolesRepository.findRoleByTitle(CUSTOMER); // asignam rolul de customer oricarui nou user care se inregistreaza
+        // am modificat acum in loc de CUSTOMER sa fie EMPLOYEE sa vad daca functioneaza functionalitatea sale si generate pdf
+        Role customerRole = rightsRolesRepository.findRoleByTitle(EMPLOYEE); // asignam rolul de customer oricarui nou user care se inregistreaza
 
         User user = new UserBuilder()
                 .setUsername(username)
@@ -92,5 +100,10 @@ public class AuthenticationServiceMySQL implements AuthenticationService {
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
+    }
+
+    @Override
+    public User getCurrentUserById(Long userId) {
+        return userRepository.findUserById(userId);
     }
 }

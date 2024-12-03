@@ -4,17 +4,13 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import mapper.BookMapper;
 import model.Book;
-import model.Order;
 import model.User;
-import model.validation.Notification;
-import repository.user.UserRepositoryMySQL;
 import service.book.BookService;
 import service.order.OrderService;
+import service.user.AuthenticationService;
 import view.BookView;
 import view.model.BookDTO;
 import view.model.builder.BookDTOBuilder;
-
-import java.util.function.LongFunction;
 
 public class BookController {
     private final BookView bookView;
@@ -107,6 +103,8 @@ public class BookController {
             }
         }
     }
+
+
 
 
 }

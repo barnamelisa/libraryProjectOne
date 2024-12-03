@@ -9,6 +9,16 @@ public class User {
     private String username;
     private String password;
     private List<Role> roles;
+    private List<Book> soldBooks;
+    private int totalSoldBooks;
+    private int totalSalesValue;
+    public Long getCurrentUserId() {
+        if (id == null) {
+            throw new IllegalStateException("No user is currently logged in.");
+        }
+        return id;
+    }
+
 
     public Long getId() {
         return id;
@@ -34,6 +44,22 @@ public class User {
         this.password = password;
     }
 
+    public int getTotalSoldBooks() {
+        return totalSoldBooks;
+    }
+
+    public void setTotalSoldBooks(int totalSoldBooks) {
+        this.totalSoldBooks = totalSoldBooks;
+    }
+
+    public int getTotalSalesValue() {
+        return totalSalesValue;
+    }
+
+    public void setTotalSalesValue(int totalSalesValue) {
+        this.totalSalesValue = totalSalesValue;
+    }
+
     public List<Role> getRoles() {
         return roles;
     }
@@ -42,11 +68,22 @@ public class User {
         this.roles = roles;
     }
     public boolean hasRole(String roleName) {
+        if (roles == null) {
+            return false; // Sau arunca o excepție dacă nu dorești să continui fără roluri
+        }
+
         for (Role role : roles) {
             if (role.getRole().equalsIgnoreCase(roleName)) {
                 return true;  // role found
             }
         }
         return false;  // role not found
+    }
+
+    public List<Book> getSoldBooks() {
+        return soldBooks;
+    }
+    public void setSoldBooks(List<Book> soldBooks) {
+        this.soldBooks = soldBooks;
     }
 }

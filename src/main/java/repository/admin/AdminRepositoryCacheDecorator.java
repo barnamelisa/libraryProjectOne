@@ -1,6 +1,7 @@
 package repository.admin;
 
 import model.Book;
+import model.Order;
 import model.User;
 import repository.book.Cache;
 
@@ -31,5 +32,30 @@ public class AdminRepositoryCacheDecorator extends AdminRepositoryDecorator{
         cache.save(users);
 
         return users;
+    }
+
+    @Override
+    public List<Order> getOrdersForUser(Long userId) {
+        return decoratedAdminRepository.getOrdersForUser(userId);
+    }
+
+    @Override
+    public List<User> findAllEmployees() {
+        if (cache.hasResult()) {
+            return cache.load(); // Returnăm rezultatul din cache
+        }
+
+        // Dacă nu avem date în cache, interogăm baza de date pentru a obține angajații
+        List<User> employees = decoratedAdminRepository.findAllEmployees();
+
+        // Salvăm rezultatul în cache pentru viitoarele cereri
+        cache.save(employees);
+
+        return employees;
+    }
+
+    @Override
+    public List<Book> findSoldBooksByUserId(Long userId) {
+        return decoratedAdminRepository.findSoldBooksByUserId(userId);
     }
 }
