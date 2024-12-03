@@ -14,6 +14,7 @@ public interface UserRepository {
 
     // verificam daca user-ul are adresa de email introdusa in bd sau daca un user vrea sa se inregistreze cu un numer care este deja luat
     boolean existsByUsername(String username); // username va fii si email-ul
+    User findUserById(Long userId);
 
 
 }

@@ -8,10 +8,13 @@ import repository.admin.AdminRepository;
 import repository.admin.AdminRepositoryCacheDecorator;
 import repository.admin.AdminRepositoryMySQL;
 import repository.book.Cache;
-import repository.security.RightsRolesRepository;
+import repository.order.OrderRepositoryMySQL;
 import repository.security.RightsRolesRepositoryMySQL;
+import repository.user.UserRepository;
+import repository.user.UserRepositoryMySQL;
 import service.admin.AdminService;
 import service.admin.AdminServiceImpl;
+import service.order.OrderServiceImpl;
 import view.AdminView;
 import view.model.UserDTO;
 
@@ -23,6 +26,7 @@ public class AdminComponentFactory {
     private final AdminController adminController;
     private final AdminRepository adminRepository;
     private final AdminService adminService;
+    private final UserRepository userRepository;
     private static volatile AdminComponentFactory instance;
 
     public static AdminComponentFactory getInstance(Boolean componentsForTest, Stage primaryStage){
@@ -40,9 +44,12 @@ public class AdminComponentFactory {
     // facem sa fie Singleton (constructor privat)
     private AdminComponentFactory(Boolean componentsForTest, Stage stage) {
         Connection connection = DatabaseConnectionFactory.getConnectionWrapper(componentsForTest).getConnection();
-        RightsRolesRepository rightsRolesRepository = new RightsRolesRepositoryMySQL(connection);
         this.adminRepository = new AdminRepositoryCacheDecorator(new AdminRepositoryMySQL(connection), new Cache<>());
-        this.adminService = new AdminServiceImpl(adminRepository);
+
+        this.userRepository = new UserRepositoryMySQL(connection, new RightsRolesRepositoryMySQL(connection));
+
+        OrderServiceImpl orderService = new OrderServiceImpl(new OrderRepositoryMySQL(connection));
+        this.adminService = new AdminServiceImpl(adminRepository, orderService, userRepository);
 
         List<UserDTO> userDTOs = UserMapper.convertUserListToUserDTOList(this.adminService.findAll());
 

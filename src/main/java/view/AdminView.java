@@ -1,5 +1,7 @@
 package view;
 
+import view.model.BookDTO;
+import view.model.UserDTO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,8 +17,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import view.model.BookDTO;
-import view.model.UserDTO;
 
 import java.util.List;
 
@@ -26,6 +26,7 @@ public class AdminView {
     private PasswordField passwordField;
     private final ObservableList<UserDTO> usersObservableList;
     private Button addUserButton;
+    private Button generateRaportButton;
     private Text actiontarget;
 
     public AdminView(Stage primaryStage, List<UserDTO> users){
@@ -63,9 +64,15 @@ public class AdminView {
 
         addUserButton = new Button("Add User");
         HBox signInButtonHBox = new HBox(10);
-        signInButtonHBox.setAlignment(Pos.BOTTOM_LEFT); // for now on center
+        signInButtonHBox.setAlignment(Pos.BOTTOM_CENTER); // for now on center
         signInButtonHBox.getChildren().add(addUserButton);
         gridPane.add(signInButtonHBox, 1, 4);
+
+        generateRaportButton = new Button("Generate Report");
+        HBox generateRaportButtonHBox = new HBox(10);
+        generateRaportButtonHBox.setAlignment(Pos.BOTTOM_CENTER);
+        generateRaportButtonHBox.getChildren().add(generateRaportButton);
+        gridPane.add(generateRaportButtonHBox, 2, 4);
 
         actiontarget = new Text();
         actiontarget.setFill(Color.FIREBRICK);
@@ -85,9 +92,12 @@ public class AdminView {
     public String getPassword() {
         return passwordField.getText();
     }
-    public void setActionTargetText(String text){ this.actiontarget.setText(text);}
     public void addUserButtonListener(EventHandler<ActionEvent> addUserButtonListener) {
         addUserButton.setOnAction(addUserButtonListener);
+    }
+
+    public void generateRaportButtonListener(EventHandler<ActionEvent> generateRaportButtonListener) {
+        generateRaportButton.setOnAction(generateRaportButtonListener);
     }
     public void addDisplayAlertMessage(String title, String header, String content){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
