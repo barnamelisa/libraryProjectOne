@@ -6,6 +6,7 @@ import java.util.List;
  *  pe care le folosesc in clase.
  */
 
+// clasa are rolul de a stoca temporar datele in memorie pt a le accesa rapid
 public class Cache<T> {
     public List<T> storage;
     public List<T> load(){

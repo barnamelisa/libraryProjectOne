@@ -40,16 +40,16 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public boolean generateReport() {
         try {
-            // 1. Obținem și procesăm toți angajații
+            // obtinem si procesam toti angajatii
             List<User> employees = adminRepository.findAllEmployees();
 
             for (User employee : employees) {
-                // Prelucrăm comenzile pentru fiecare angajat
+                // prelucram comenzile pt fiecare angajat
                 List<Order> orders = adminRepository.getOrdersForUser(employee.getId());
                 orderService.addSoldBooksFromOrders(employee, orders);
             }
 
-            // 2. Generăm raportul pe baza datelor procesate
+            // generam raportul
             generatePdfReport(employees);
             return true;
 
@@ -67,23 +67,22 @@ public class AdminServiceImpl implements AdminService {
             PdfDocument pdf = new PdfDocument(writer);
             Document document = new Document(pdf);
 
-            // Adăugăm titlu
+            // add titlu
             document.add(new Paragraph("Raport Vanzari Utilizatori - Luna Curenta\n\n"));
 
-            // Iterăm prin utilizatori
+            // iteram prin utilizatori
             for (User user : users) {
-                // După actualizarea utilizatorului, obținem totalurile de la obiectul user
-                int totalSoldBooks = user.getTotalSoldBooks();  // Folosim totalul cărților vândute calculat anterior
+
+                int totalSoldBooks = user.getTotalSoldBooks();
                 double totalSalesValue = user.getTotalSalesValue();
 
-                // Verificăm dacă utilizatorul este angajat
+                // verificam daca user-ul este angajat
                 if (user != null && orderService.isUserEmployee(user.getId())) {
                     document.add(new Paragraph("User: " + user.getUsername()));
                     document.add(new Paragraph("Carti vandute: " + totalSoldBooks));
                     document.add(new Paragraph("Valoare vanzari: " + totalSalesValue+ " RON"));
-                    document.add(new Paragraph("\n")); // Linie de separare
+                    document.add(new Paragraph("\n"));
 
-                    // Linie de separare între utilizatori
                     document.add(new Paragraph("\n"));
                 }
             }

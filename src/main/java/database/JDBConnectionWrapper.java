@@ -14,6 +14,7 @@ public class JDBConnectionWrapper {
     private Connection connection;
 
     public JDBConnectionWrapper(String schema){
+
         // baza de date de pe acel server urmeaza sa o cream intr-un mod dinamic in constructor
         try {
             Class.forName(JDBC_DRIVER);

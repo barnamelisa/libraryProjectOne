@@ -21,6 +21,7 @@ import view.model.UserDTO;
 import java.sql.Connection;
 import java.util.List;
 
+// un component factory ne ajuta la crearea arborelui de dependinte
 public class AdminComponentFactory {
     private final AdminView adminView;
     private final AdminController adminController;

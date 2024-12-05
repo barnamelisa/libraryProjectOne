@@ -13,8 +13,10 @@ import view.model.BookDTO;
 import view.model.builder.BookDTOBuilder;
 
 public class BookController {
+
+    // NU punem Repository aici
     private final BookView bookView;
-    private final BookService bookService;
+    private final BookService bookService; // in service se intampla partea de Business Logic
     private final OrderService orderService;
     private final Long userId;
 

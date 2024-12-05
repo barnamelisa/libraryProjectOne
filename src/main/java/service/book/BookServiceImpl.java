@@ -41,7 +41,6 @@ public class BookServiceImpl implements BookService {
         return (int) ChronoUnit.YEARS.between(book.getPublishedDate(), now);
     }
 
-    // de explicat + inteles
     @Override
     public boolean saleBook(Book book) {
         // apelam metoda "saleBook" din BookRepository

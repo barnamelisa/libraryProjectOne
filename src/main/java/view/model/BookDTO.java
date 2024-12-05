@@ -5,6 +5,8 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+// folosim DTO=Data Transfer Obj ca sa definim exact ce trebuie sa se vada in interfata, adica ca nu vrem sa expunem
+// in interfata tot ce e in obiect
 public class BookDTO {
     private StringProperty author;
 

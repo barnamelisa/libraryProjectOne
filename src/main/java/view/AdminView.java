@@ -64,7 +64,7 @@ public class AdminView {
 
         addUserButton = new Button("Add User");
         HBox signInButtonHBox = new HBox(10);
-        signInButtonHBox.setAlignment(Pos.BOTTOM_CENTER); // for now on center
+        signInButtonHBox.setAlignment(Pos.BOTTOM_CENTER);
         signInButtonHBox.getChildren().add(addUserButton);
         gridPane.add(signInButtonHBox, 1, 4);
 
