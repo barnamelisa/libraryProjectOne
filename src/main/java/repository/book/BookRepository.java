@@ -14,5 +14,7 @@ public interface BookRepository {
     boolean save(Book book);
     boolean delete(Book book);
     void removeAll(); // face flash-sterge tot ce este in bd
-    void saleBook(Book book); // metoda cu care vom crea comenzi, respectiv vom vinde o carte // o facem void deoarece metoda are rolul de a actualiza bd si interfata
+
+    // o facem void deoarece metoda are rolul de a actualiza bd si interfata
+    void saleBook(Book book); // metoda cu care vom crea comenzi, respectiv vom vinde o carte
 }

@@ -20,7 +20,7 @@ import java.lang.Boolean;
 import java.sql.Connection;
 import java.util.List;
 
-/** clasa Singleton care va contine clasele de care noi avem nevoie di dependintele pe care le folosim */
+/** clasa Singleton care va contine clasele de care noi avem nevoie si dependintele pe care le folosim */
 public class EmployeeComponentFactory {
     private final BookView bookView; // partea de interfata
     private final BookController bookController;
@@ -29,6 +29,7 @@ public class EmployeeComponentFactory {
     private final OrderService orderService;
     private final OrderRepository orderRepository;
 
+    // folosim volatile ca sa prevenim anumite probleme legate de sincronizarea multithreading-ului
     private static volatile EmployeeComponentFactory instance; // instanta a clasei pt ca este Singleton
 
     /** clasa va fi locul unde vom consytrui arborele de dependency injection si practic vom controla app folosindu-ne de dependinte

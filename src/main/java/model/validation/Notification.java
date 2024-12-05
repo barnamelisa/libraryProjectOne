@@ -1,7 +1,10 @@
 package model.validation;
 import java.util.*;
+
+// T = un tip generic, adica un placeholder care poate fi orice tip de date cand creez o instanta
+// rolul clasei Notification este de a retine erorile aparute ca sa nu trebuiasca sa le retinem undeva
 public class Notification<T> {
-    private T result;
+    private T result; // avem acces la result doar daca nu exista erori
     private final List<String> errors;
     public Notification(){
         this.errors =  new ArrayList<>();

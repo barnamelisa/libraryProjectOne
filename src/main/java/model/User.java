@@ -2,7 +2,7 @@ package model;
 
 import java.util.*;
 
-// BEAN
+// BEAN- atributele sun private si avem acces la ele doar prin metode publice + constructor fara parametrii
 public class User {
 
     private Long id;
@@ -69,7 +69,7 @@ public class User {
     }
     public boolean hasRole(String roleName) {
         if (roles == null) {
-            return false; // Sau arunca o excepție dacă nu dorești să continui fără roluri
+            return false;
         }
 
         for (Role role : roles) {

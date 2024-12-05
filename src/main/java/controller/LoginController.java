@@ -41,7 +41,7 @@ public class LoginController {
             if (loginNotification.hasErrors()){
                 loginView.setActionTargetText(loginNotification.getFormattedErrors());
             } else{
-                User loggedInUser = loginNotification.getResult();
+                User loggedInUser = loginNotification.getResult(); // daca nu exista erori metoda getResult() va returna un obiect de tip User
                 if (loggedInUser != null){
                     Long userId = loggedInUser.getId();
                     loginView.setActionTargetText("LogIn Successfull!");
@@ -51,7 +51,9 @@ public class LoginController {
                         // aceasta linie de cod deschide un alt stage care este Library
                         EmployeeComponentFactory.getInstance(LoginComponentFactory.getComponentsForTests(), LoginComponentFactory.getStage(), userId);
                     } else if (loggedInUser.hasRole("administrator")){
+
                         // daca persoana care face log in este Admin atunci se va deschide o interfata noua care va permite utilizatorului sa adauge noi users
+                        // getStage furnizeaza scena in care componentele din interfata vor fi adaugate
                         AdminComponentFactory.getInstance(LoginComponentFactory.getComponentsForTests(), LoginComponentFactory.getStage());
                     }
                 } else {

@@ -128,7 +128,6 @@ public class BookRepositoryMySQL implements BookRepository {
         }
     }
 
-    // de explicat + inteles
     public boolean update(Book book){
         String updateStock = "UPDATE book SET stock = ? WHERE title = ? and author = ?";
 

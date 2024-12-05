@@ -42,13 +42,12 @@ public class AdminRepositoryCacheDecorator extends AdminRepositoryDecorator{
     @Override
     public List<User> findAllEmployees() {
         if (cache.hasResult()) {
-            return cache.load(); // Returnăm rezultatul din cache
+            return cache.load(); // returnam rez din cache
         }
 
-        // Dacă nu avem date în cache, interogăm baza de date pentru a obține angajații
+        // daca nu avem date in cache, interogam baza de date pentru a obtine angajatii
         List<User> employees = decoratedAdminRepository.findAllEmployees();
 
-        // Salvăm rezultatul în cache pentru viitoarele cereri
         cache.save(employees);
 
         return employees;

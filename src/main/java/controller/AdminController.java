@@ -9,8 +9,10 @@ import view.model.UserDTO;
 import view.model.builder.UserDTOBuilder;
 
 public class AdminController {
+
+    // NU punem Repository aici
     private final AdminView adminView;
-    private final AdminService adminService;
+    private final AdminService adminService; // in service se intampla partea de Business Logic
 
     public AdminController(AdminView adminView, AdminService adminService) {
         this.adminView = adminView;
@@ -52,7 +54,7 @@ public class AdminController {
             if (reportGenerated) {
                 adminView.addDisplayAlertMessage("Raport Generat", "Raportul a fost generat cu succes!", "Raportul PDF a fost creat.");
             } else {
-                adminView.addDisplayAlertMessage("Eroare Generare Raport", "A apărut o problemă la generarea raportului", "Nu s-a putut crea raportul PDF. Încearcă din nou.");
+                adminView.addDisplayAlertMessage("Eroare Generare Raport", "A aparut o problema la generarea raportului", "Nu s-a putut crea raportul PDF. Incearca din nou.");
             }
 
 
