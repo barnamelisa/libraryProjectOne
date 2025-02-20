@@ -1,9 +1,6 @@
 # 📚 Online Bookstore / Library Management System  
 
-![GitHub repo size](https://img.shields.io/github/repo-size/barnamelisa/Bookstore-Management?color=blue)
-![GitHub last commit](https://img.shields.io/github/last-commit/barnamelisa/Bookstore-Management?color=green)
 ![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)
-![License](https://img.shields.io/github/license/barnamelisa/Bookstore-Management?color=yellow)
 
 📌 This repository contains the implementation of a **Bookstore Management System** using Java, where users can manage books, make orders, and view reports. The system includes two types of users: **Employee** and **Administrator**. This application follows **SOLID principles**, **Layered Architecture**, and **Clean Code** principles to ensure scalability, maintainability, and clarity of the code.
 
@@ -13,9 +10,9 @@
 - [📌 About](#-about)  
 - [🚀 Features](#-features)  
 - [💻 How to Use](#-how-to-use)  
-- [📂 Folder Structure](#-folder-structure)
-- [🔹 How the Application Works](#-how-the -application-works) 
-- [ℹ️ More informations about implementation]
+- [📂 Folder Structure](#-folder-structure)  
+- [🔹 How the Application Works](#-how-the-application-works)  
+- [ℹ️ More Information about Implementation](#ℹ️-more-information-about-implementation)
 
 ---
 
