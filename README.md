@@ -12,7 +12,7 @@
 - [💻 How to Use](#-how-to-use)  
 - [📂 Folder Structure](#-folder-structure)  
 - [🔹 How the Application Works](#-how-the-application-works)  
-- [ℹ️ More Information about Implementation](#-more-information-about-implementation)
+- [ℹ️ More Information about Implementation](#ℹ️-more-information-about-implementation)
 
 ---
 
@@ -75,7 +75,7 @@ cd Bookstore-Management
 
 ---
 
-## ℹ️ More informations about implementation
+## ℹ️ More information about implementation
 
 This application follows solid principles and implements a clean, secure, and maintainable structure. Here's more detailed information about how the system was implemented:
 
