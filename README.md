@@ -12,7 +12,7 @@
 - [💻 How to Use](#-how-to-use)  
 - [📂 Folder Structure](#-folder-structure)  
 - [🔹 How the Application Works](#-how-the-application-works)  
-- [ℹ️ More Information about Implementation](#-more-information-about-implementation)
+- [ℹ️ More Information about Implementation](#ℹ️-more-information-about-implementation)
 
 ---
 
