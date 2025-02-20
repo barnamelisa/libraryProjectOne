@@ -75,7 +75,7 @@ cd Bookstore-Management
 
 ---
 
-## ℹ️ More informations about implementation
+## ℹ️ More information about implementation
 
 This application follows solid principles and implements a clean, secure, and maintainable structure. Here's more detailed information about how the system was implemented:
 
